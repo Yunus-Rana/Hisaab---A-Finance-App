@@ -1,0 +1,124 @@
+<main class="feature-page record-page">
+  <section class="page-heading">
+    <div>
+      <p class="eyebrow">MONEY COMING IN</p>
+      <h1>Income</h1>
+      <p class="subtitle">Keep a record of salary and other income sources.</p>
+    </div>
+    <span class="record-count"
+      >{{ incomes().length }} {{ incomes().length === 1 ? 'entry' : 'entries' }}</span
+    >
+  </section>
+  @if (errorMessage()) {
+    <p class="alert" role="alert">{{ errorMessage() }}</p>
+  }
+  <div class="record-grid">
+    <section class="panel record-form-panel">
+      <p class="eyebrow">{{ editingId() ? 'UPDATE RECORD' : 'NEW ENTRY' }}</p>
+      <h2>{{ editingId() ? 'Edit income' : 'Add income' }}</h2>
+      <form [formGroup]="form" (ngSubmit)="saveIncome()">
+        <label for="income-source">Source <span class="required">*</span></label>
+        <input
+          id="income-source"
+          type="text"
+          maxlength="100"
+          placeholder="Salary, freelance…"
+          formControlName="source"
+          required
+        />
+        @if (form.controls.source.touched && form.controls.source.invalid) {
+          <small class="field-error">Enter a source (up to 100 characters).</small>
+        }
+        <label for="income-amount">Amount <span class="required">*</span></label>
+        <div class="amount-field">
+          <span aria-hidden="true">PKR</span
+          ><input
+            id="income-amount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            inputmode="decimal"
+            placeholder="0.00"
+            formControlName="amount"
+            required
+          />
+        </div>
+        @if (form.controls.amount.touched && form.controls.amount.invalid) {
+          <small class="field-error"
+            >Enter an amount greater than zero, with up to 2 decimals.</small
+          >
+        }
+        <label for="received-on">Received on <span class="required">*</span></label>
+        <input id="received-on" type="date" formControlName="receivedOn" required />
+        <label for="income-note">Note <span class="optional">OPTIONAL</span></label>
+        <textarea
+          id="income-note"
+          rows="3"
+          maxlength="500"
+          placeholder="Add a little detail…"
+          formControlName="note"
+        ></textarea>
+        <div class="form-actions">
+          @if (editingId()) {
+            <button class="button button-muted" type="button" (click)="cancelEdit()">Cancel</button>
+          }
+          <button class="button button-primary" type="submit" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving…' : editingId() ? 'Save changes' : 'Add income' }}
+          </button>
+        </div>
+      </form>
+    </section>
+    <section class="panel record-list-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">YOUR RECORDS</p>
+          <h2>Income history</h2>
+        </div>
+      </div>
+      @if (isLoading()) {
+        <p class="empty-state">Loading income…</p>
+      } @else if (!incomes().length) {
+        <div class="empty-state">
+          <span class="icon icon-income empty-icon" aria-hidden="true"></span>
+          <h3>No income recorded yet</h3>
+          <p>Add your salary or another source to get started.</p>
+        </div>
+      } @else {
+        <ul class="record-list">
+          @for (income of incomes(); track income.id) {
+            <li class="record-row">
+              <span class="record-marker income-marker" aria-hidden="true">+</span>
+              <div class="record-description">
+                <strong>{{ income.source }}</strong
+                ><span
+                  >{{ income.receivedOn | date: 'MMM d, y' }}
+                  @if (income.note) {
+                    · {{ income.note }}
+                  }
+                </span>
+              </div>
+              <strong class="money income-text">{{ income.amount | currency: 'PKR' }}</strong>
+              <div class="record-actions">
+                <button
+                  type="button"
+                  class="icon-button"
+                  (click)="editIncome(income)"
+                  [attr.aria-label]="'Edit ' + income.source"
+                >
+                  Edit</button
+                ><button
+                  type="button"
+                  class="icon-button"
+                  (click)="deleteIncome(income)"
+                  [attr.aria-label]="'Delete ' + income.source"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  </div>
+</main>

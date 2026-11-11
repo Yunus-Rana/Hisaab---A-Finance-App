@@ -1,0 +1,186 @@
+<main class="feature-page dashboard-page">
+  <section class="page-heading">
+    <div>
+      <p class="eyebrow">YOUR MONEY, IN FOCUS</p>
+      <h1>Overview</h1>
+      <p class="subtitle">A clear picture of your finances this month.</p>
+    </div>
+    <span class="month-label">{{ formatCurrentMonth(currentMonth()) }}</span>
+  </section>
+
+  @if (errorMessage()) {
+    <p class="alert" role="alert">{{ errorMessage() }}</p>
+  } @else if (isLoading()) {
+    <p class="panel empty-state">Loading your overview…</p>
+  } @else {
+    <section class="summary-grid" aria-label="This month's totals">
+      <article class="summary-card income-card">
+        <span class="summary-label">Income</span>
+        <strong class="summary-value income-text">{{ summary()?.income | currency: 'PKR' }}</strong>
+        <span class="summary-detail">{{ summary()?.incomeCount }} entries this month</span>
+      </article>
+      <article class="summary-card expense-card">
+        <span class="summary-label">Expenses</span>
+        <strong class="summary-value expense-text">{{
+          summary()?.expenses | currency: 'PKR'
+        }}</strong>
+        <span class="summary-detail">{{ summary()?.expenseCount }} entries this month</span>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Net savings</span>
+        <strong
+          class="summary-value"
+          [class.income-text]="(summary()?.netSavings ?? 0) >= 0"
+          [class.expense-text]="(summary()?.netSavings ?? 0) < 0"
+        >
+          {{ summary()?.netSavings | currency: 'PKR' }}
+        </strong>
+        <span class="summary-detail">Income minus expenses</span>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Savings rate</span>
+        <strong class="summary-value">{{
+          (summary()?.savingsRate ?? 0) / 100 | percent: '1.0-1'
+        }}</strong>
+        <span class="summary-detail">Of recorded monthly income</span>
+      </article>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="panel trend-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">SIX-MONTH VIEW</p>
+            <h2>Income and expenses</h2>
+          </div>
+          <div class="chart-legend">
+            <span class="legend-income">Income</span><span class="legend-expense">Expenses</span>
+          </div>
+        </div>
+        <div class="trend-plot">
+          <div class="trend-axis" aria-hidden="true">
+            <span class="chart-unit">PKR</span>
+            <span>{{ formatAxisValue(maxTrendValue()) }}</span>
+            <span>{{ formatAxisValue(maxTrendValue() / 2) }}</span>
+            <span>0</span>
+          </div>
+          <div
+            class="trend-chart"
+            role="img"
+            aria-label="Monthly income and expense comparison in PKR for the last six months"
+          >
+            <svg viewBox="0 0 600 228" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="income-area-fill" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#10B981" stop-opacity="0.15" />
+                  <stop offset="100%" stop-color="#10B981" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path class="chart-income-area" [attr.d]="chartArea('income')" />
+              <path class="chart-income-line" [attr.d]="chartLine('income')" />
+              <path class="chart-expense-line" [attr.d]="chartLine('expenses')" />
+              @for (point of trend(); track point.month; let index = $index) {
+                <circle
+                  class="chart-income-point"
+                  [attr.cx]="chartX(index)"
+                  [attr.cy]="chartY(point.income)"
+                  r="3.5"
+                >
+                  <title>
+                    {{ formatMonth(point.month) }} income: {{ point.income | currency: 'PKR' }}
+                  </title>
+                </circle>
+                <circle
+                  class="chart-expense-point"
+                  [attr.cx]="chartX(index)"
+                  [attr.cy]="chartY(point.expenses)"
+                  r="3.5"
+                >
+                  <title>
+                    {{ formatMonth(point.month) }} expenses: {{ point.expenses | currency: 'PKR' }}
+                  </title>
+                </circle>
+              }
+            </svg>
+            <div class="chart-months" aria-hidden="true">
+              @for (point of trend(); track point.month) {
+                <span>{{ formatMonth(point.month) }}</span>
+              }
+            </div>
+          </div>
+          @if (!hasTrendData()) {
+            <p class="chart-empty-note">Record income and expenses to see your monthly trend.</p>
+          }
+        </div>
+      </article>
+
+      <article class="panel category-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">THIS MONTH</p>
+            <h2>Spending by category</h2>
+          </div>
+        </div>
+        @if (categoryTotals().length) {
+          <ul class="category-breakdown">
+            @for (item of categoryTotals(); track item.categoryId) {
+              <li>
+                <div class="breakdown-label">
+                  <strong>{{ categoryName(item.categoryId) }}</strong>
+                  <span>{{ item.amount | currency: 'PKR' }}</span>
+                </div>
+                <div class="breakdown-track"><span [style.width.%]="item.share"></span></div>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="subtle-copy">Add expenses to see where your money goes.</p>
+        }
+      </article>
+    </section>
+
+    <section class="panel recent-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">RECENT ACTIVITY</p>
+          <h2>Latest expenses</h2>
+        </div>
+        <a class="text-link" routerLink="/expenses">All expenses</a>
+      </div>
+      @if (recentExpenses().length) {
+        <ul class="recent-list">
+          @for (expense of recentExpenses(); track expense.id) {
+            <li>
+              <span class="recent-category">{{
+                categoryName(expense.categoryId).slice(0, 1)
+              }}</span>
+              <div>
+                <strong>{{ categoryName(expense.categoryId) }}</strong
+                ><span
+                  >{{ expense.spentOn | date: 'MMM d, y' }}
+                  @if (expense.note) {
+                    · {{ expense.note }}
+                  }
+                </span>
+              </div>
+              <strong class="expense-text money">{{ expense.amount | currency: 'PKR' }}</strong>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="subtle-copy">
+          No expenses recorded yet. <a routerLink="/expenses">Add your first expense</a>.
+        </p>
+      }
+    </section>
+
+    <a class="planner-callout" routerLink="/savings-planner">
+      <span class="icon icon-money" aria-hidden="true"></span>
+      <span
+        ><strong>Planning for something?</strong
+        ><small>Estimate how long it could take to reach a savings target.</small></span
+      >
+      <span class="callout-arrow" aria-hidden="true">→</span>
+    </a>
+  }
+</main>

@@ -1,0 +1,540 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: var(--hisaab-canvas);
+}
+
+.app-header {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: flex;
+  height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 3vw, 40px);
+  border-bottom: 1px solid var(--hisaab-border);
+  background: var(--hisaab-surface);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--hisaab-brand);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: var(--hisaab-radius-sm);
+  background: var(--hisaab-highlight);
+  color: var(--hisaab-highlight-ink);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.header-actions,
+.sidebar-account {
+  display: flex;
+}
+
+.header-actions {
+  align-items: center;
+  gap: 16px;
+}
+
+.theme-toggle,
+.sign-in-action,
+.create-account-action,
+.menu-toggle,
+.mobile-menu-action,
+.notice-dismiss,
+.account-message button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  background-color: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.icon-theme {
+  width: 18px;
+  height: 18px;
+  mask-image: url('/assets/icons/theme.png');
+  -webkit-mask-image: url('/assets/icons/theme.png');
+}
+
+.icon-lock {
+  width: 16px;
+  height: 16px;
+  mask-image: url('/assets/icons/lock.png');
+  -webkit-mask-image: url('/assets/icons/lock.png');
+}
+
+.icon-account {
+  width: 18px;
+  height: 18px;
+  mask-image: url('/assets/icons/account.png');
+  -webkit-mask-image: url('/assets/icons/account.png');
+}
+
+.icon-money {
+  mask-image: url('/assets/icons/money.png');
+  -webkit-mask-image: url('/assets/icons/money.png');
+}
+
+.icon-overview {
+  mask-image: url('/assets/icons/overview.png');
+  -webkit-mask-image: url('/assets/icons/overview.png');
+}
+
+.icon-expenses {
+  mask-image: url('/assets/icons/expenses.png');
+  -webkit-mask-image: url('/assets/icons/expenses.png');
+}
+
+.icon-income {
+  mask-image: url('/assets/icons/income.png');
+  -webkit-mask-image: url('/assets/icons/income.png');
+}
+
+.icon-categories {
+  mask-image: url('/assets/icons/categories.png');
+  -webkit-mask-image: url('/assets/icons/categories.png');
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 4px;
+  background: transparent;
+  color: var(--hisaab-text-muted);
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.sign-in-action {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  border-radius: var(--hisaab-radius-sm);
+  background: transparent;
+  color: var(--hisaab-text);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.create-account-action {
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: var(--hisaab-radius-sm);
+  background: var(--hisaab-highlight);
+  color: var(--hisaab-highlight-ink);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.menu-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  border: 1px solid var(--hisaab-border);
+  border-radius: var(--hisaab-radius-sm);
+  background: var(--hisaab-surface);
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: none;
+}
+
+.menu-toggle svg {
+  width: 21px;
+  height: 21px;
+  fill: var(--hisaab-text);
+}
+
+.guest-notice {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 9px 20px;
+  border-bottom: 1px solid color-mix(in srgb, var(--hisaab-highlight) 30%, var(--hisaab-border));
+  background: color-mix(in srgb, var(--hisaab-highlight) 14%, var(--hisaab-surface));
+  color: var(--hisaab-text-muted);
+  font-size: 12px;
+}
+
+.guest-notice p {
+  margin: 0;
+}
+
+.notice-lock {
+  width: 17px;
+  height: 17px;
+  margin-left: 1px;
+  color: var(--hisaab-expense);
+}
+
+.notice-dismiss,
+.account-message button {
+  padding: 4px 6px;
+  background: transparent;
+  color: var(--hisaab-brand);
+  font-size: 11px;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.account-message,
+.storage-warning {
+  position: fixed;
+  z-index: 10;
+  right: 20px;
+  bottom: 20px;
+  max-width: min(440px, calc(100vw - 40px));
+  padding: 13px 15px;
+  border: 1px solid var(--hisaab-border);
+  border-radius: var(--hisaab-radius-md);
+  background: var(--hisaab-surface);
+  box-shadow: var(--hisaab-shadow-popover);
+  color: var(--hisaab-text);
+  font-size: 12px;
+}
+
+.account-message button {
+  margin-left: 8px;
+}
+
+.storage-warning {
+  bottom: 76px;
+  border-color: var(--hisaab-expense);
+}
+
+.app-body {
+  display: grid;
+  min-height: calc(100vh - 122px);
+  grid-template-columns: 244px minmax(0, 1fr);
+}
+
+.desktop-sidebar {
+  display: none;
+  flex-direction: column;
+  gap: 28px;
+  padding: 30px 18px 22px 24px;
+  border-right: 1px solid var(--hisaab-border);
+  background: var(--hisaab-surface);
+}
+
+.nav-label {
+  margin: 0 0 13px 10px;
+  color: var(--hisaab-text-muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 5px;
+}
+
+.nav-item {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  border-radius: var(--hisaab-radius-sm);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.nav-item-active {
+  position: relative;
+  background: color-mix(in srgb, var(--hisaab-highlight) 18%, var(--hisaab-surface));
+  color: var(--hisaab-brand-strong);
+  font-weight: 650;
+}
+
+.nav-item-active::before {
+  position: absolute;
+  left: 0;
+  width: 3px;
+  height: 20px;
+  border-radius: var(--hisaab-radius-pill);
+  background: var(--hisaab-highlight);
+  content: '';
+}
+
+.nav-item .icon {
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+}
+
+.nav-item-disabled {
+  color: var(--hisaab-text-muted);
+  opacity: 0.62;
+}
+
+.sidebar-account {
+  flex-direction: column;
+  gap: 7px;
+  margin-top: auto;
+  padding: 17px 10px 15px;
+  border: 1px solid var(--hisaab-border);
+  border-radius: var(--hisaab-radius-md);
+  background: var(--hisaab-surface);
+}
+
+.sidebar-account .nav-label {
+  margin: 0 0 5px;
+}
+
+.sidebar-account .sign-in-action {
+  width: 100%;
+}
+
+.sidebar-account .create-account-action {
+  width: 100%;
+}
+
+.sidebar-account .create-account-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.sidebar-account .create-account-action .icon {
+  width: 17px;
+  height: 17px;
+}
+
+.sidebar-footnote {
+  margin: 0 10px;
+  color: var(--hisaab-text-muted);
+  font-size: 11px;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1440px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 38px clamp(24px, 4vw, 56px) 56px;
+}
+
+.mobile-navigation {
+  position: fixed;
+  z-index: 5;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  min-height: 60px;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 6px 6px max(6px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--hisaab-border);
+  background: var(--hisaab-surface);
+}
+
+.mobile-nav-item {
+  position: relative;
+  display: grid;
+  min-height: 52px;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  border-radius: var(--hisaab-radius-sm);
+  color: var(--hisaab-text-muted);
+  font-size: 9px;
+  text-decoration: none;
+}
+
+.mobile-nav-item .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.mobile-nav-active {
+  background: color-mix(in srgb, var(--hisaab-highlight) 18%, var(--hisaab-surface));
+  color: var(--hisaab-brand-strong);
+  font-weight: 650;
+}
+
+:root[data-theme='dark'] .mobile-nav-active {
+  background: var(--hisaab-dark-nav-active);
+  color: var(--hisaab-income);
+}
+
+:root[data-theme='dark'] .mobile-nav-active::before {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  left: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--hisaab-income), transparent);
+  content: '';
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .desktop-sidebar {
+    display: flex;
+    visibility: visible;
+  }
+
+  .mobile-navigation {
+    display: none;
+  }
+
+  .page-container {
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 48rem) {
+  .menu-toggle {
+    display: grid;
+  }
+
+  .app-body {
+    display: block;
+    min-height: calc(100vh - 122px);
+  }
+
+  .page-container {
+    padding: 30px 24px 96px;
+  }
+
+  .desktop-sidebar {
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: min(300px, calc(100vw - 56px));
+    padding: 28px 20px 24px;
+    box-shadow: var(--hisaab-shadow-popover);
+    visibility: hidden;
+    transform: translateX(-105%);
+    transition: transform 180ms ease;
+  }
+
+  .desktop-sidebar.sidebar-open {
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    z-index: 8;
+    inset: 0;
+    display: block;
+    border: 0;
+    background: rgb(17 28 21 / 42%);
+  }
+
+  .sidebar-account {
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 40rem) {
+  .app-header {
+    height: 68px;
+    padding-inline: 16px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .theme-toggle {
+    gap: 7px;
+    font-size: 10px;
+  }
+
+  .theme-toggle,
+  .menu-toggle {
+    min-height: 38px;
+  }
+
+  .menu-toggle {
+    width: 38px;
+    height: 38px;
+  }
+
+  .menu-toggle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .guest-notice {
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+  }
+
+  .notice-dismiss {
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  .page-container {
+    padding: 26px 18px 96px;
+  }
+
+  .desktop-sidebar {
+    width: min(300px, calc(100vw - 48px));
+  }
+}
+
+@media (max-width: 23rem) {
+  .theme-label {
+    display: none;
+  }
+
+  .page-container {
+    padding-inline: 14px;
+  }
+}

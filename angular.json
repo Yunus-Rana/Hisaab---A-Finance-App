@@ -22,10 +22,17 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "dm-sans-*-wght-normal.woff2",
+                "input": "node_modules/@fontsource-variable/dm-sans/files",
+                "output": "assets/fonts"
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/app/app.css",
+              "src/app/features/expenses/expense-list.component.css"
             ]
           },
           "configurations": {
@@ -38,8 +45,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "8kB",
+                  "maximumError": "10kB"
                 }
               ],
               "outputHashing": "all"

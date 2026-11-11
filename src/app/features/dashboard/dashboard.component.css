@@ -1,0 +1,496 @@
+.feature-page {
+  width: 100%;
+}
+
+.page-heading,
+.panel-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.page-heading {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+  color: var(--hisaab-brand);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.page-heading h1 {
+  margin: 0 0 8px;
+  color: var(--hisaab-text);
+  font-size: clamp(32px, 4vw, 40px);
+  font-weight: 650;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--hisaab-text-muted);
+  font-size: 14px;
+}
+
+.month-label {
+  flex-shrink: 0;
+  padding: 8px 11px;
+  border: 1px solid var(--hisaab-border);
+  border-radius: var(--hisaab-radius-pill);
+  color: var(--hisaab-text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--hisaab-space-4);
+  margin-bottom: var(--hisaab-space-4);
+}
+
+.summary-card,
+.panel {
+  border: 1px solid var(--hisaab-border);
+  border-radius: var(--hisaab-radius-lg);
+  background: var(--hisaab-surface);
+  box-shadow: var(--hisaab-shadow-card);
+}
+
+.panel,
+.summary-card {
+  background: var(--hisaab-dark-card-fill, var(--hisaab-surface));
+}
+
+.summary-card {
+  border: 1px solid var(--hisaab-border);
+}
+
+:host-context([data-theme='dark']) .summary-card.income-card {
+  position: relative;
+  border-color: transparent;
+}
+
+:host-context([data-theme='dark']) .summary-card.income-card::before,
+:host-context([data-theme='dark']) .summary-card.expense-card::before {
+  position: absolute;
+  z-index: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--hisaab-dark-income-border);
+  content: '';
+  inset: 0;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+:host-context([data-theme='dark']) .summary-card.expense-card {
+  position: relative;
+  border-color: transparent;
+}
+
+:host-context([data-theme='dark']) .summary-card.expense-card::before {
+  background: var(--hisaab-dark-expense-border);
+}
+
+.summary-card {
+  display: grid;
+  min-width: 0;
+  gap: 9px;
+  padding: 18px;
+}
+
+.summary-label,
+.summary-detail {
+  color: var(--hisaab-text-muted);
+  font-size: 11px;
+}
+
+.summary-value {
+  overflow: hidden;
+  color: var(--hisaab-text);
+  font-size: clamp(17px, 2vw, 23px);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.income-text {
+  color: var(--hisaab-income);
+}
+
+.expense-text {
+  color: var(--hisaab-expense);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.8fr);
+  gap: var(--hisaab-space-4);
+  margin-bottom: var(--hisaab-space-4);
+}
+
+.panel {
+  min-width: 0;
+  padding: 20px;
+}
+
+.panel-heading {
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.panel-heading .eyebrow {
+  margin-bottom: 5px;
+}
+
+.panel-heading h2,
+.planner-callout strong {
+  margin: 0;
+  color: var(--hisaab-text);
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 11px;
+  color: var(--hisaab-text-muted);
+  font-size: 10px;
+}
+
+.chart-legend span::before {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 5px;
+  border-radius: 50%;
+  content: '';
+}
+
+.legend-income::before,
+.bar-income {
+  background: var(--hisaab-income);
+}
+
+.legend-expense::before,
+.bar-expense {
+  background: var(--hisaab-expense);
+}
+
+.trend-plot {
+  position: relative;
+  min-width: 0;
+  padding-left: 52px;
+}
+
+.trend-axis {
+  position: absolute;
+  top: 12px;
+  bottom: 28px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--hisaab-text-muted);
+  font-size: 9px;
+}
+
+.chart-unit {
+  position: absolute;
+  top: -13px;
+  left: 0;
+  color: var(--hisaab-text-muted);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.trend-chart {
+  position: relative;
+  height: 220px;
+  padding: 0;
+  background: repeating-linear-gradient(
+    to top,
+    transparent 0,
+    transparent calc(25% - 0.5px),
+    var(--hisaab-border) 25%,
+    transparent calc(25% + 0.5px)
+  );
+  border-bottom: 1px solid var(--hisaab-border);
+}
+
+.trend-chart svg {
+  display: block;
+  width: 100%;
+  height: calc(100% - 22px);
+  overflow: visible;
+}
+
+.chart-income-area {
+  fill: url(#income-area-fill);
+}
+
+.chart-income-line,
+.chart-expense-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-income-line {
+  stroke: var(--hisaab-income);
+}
+
+.chart-expense-line {
+  stroke: var(--hisaab-expense);
+}
+
+.chart-income-point {
+  fill: var(--hisaab-income);
+  stroke: var(--hisaab-surface);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-expense-point {
+  fill: var(--hisaab-expense);
+  stroke: var(--hisaab-surface);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-months {
+  display: grid;
+  height: 22px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  justify-items: center;
+  color: var(--hisaab-text-muted);
+  font-size: 10px;
+}
+
+.chart-empty-note {
+  position: absolute;
+  top: 43%;
+  right: 12px;
+  left: 64px;
+  margin: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--hisaab-border);
+  border-radius: var(--hisaab-radius-sm);
+  background: color-mix(in srgb, var(--hisaab-surface) 92%, transparent);
+  color: var(--hisaab-text-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+.category-breakdown,
+.recent-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-breakdown {
+  display: grid;
+  gap: 17px;
+}
+
+.breakdown-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+  font-size: 11px;
+}
+
+.breakdown-label strong {
+  overflow: hidden;
+  color: var(--hisaab-text);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breakdown-label span {
+  color: var(--hisaab-text-muted);
+  white-space: nowrap;
+}
+
+.breakdown-track,
+.planner-progress {
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--hisaab-radius-pill);
+  background: var(--hisaab-surface-muted);
+}
+
+.breakdown-track span,
+.planner-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--hisaab-brand);
+}
+
+.recent-panel {
+  margin-bottom: var(--hisaab-space-4);
+}
+
+.text-link,
+.subtle-copy a {
+  color: var(--hisaab-brand);
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.recent-list li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 0;
+  border-top: 1px solid var(--hisaab-border);
+}
+
+.recent-category {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: var(--hisaab-radius-md);
+  background: var(--hisaab-surface-muted);
+  color: var(--hisaab-brand);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.recent-list li > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.recent-list li > div strong,
+.recent-list li > strong {
+  color: var(--hisaab-text);
+  font-size: 11px;
+}
+
+.recent-list li > div span {
+  overflow: hidden;
+  color: var(--hisaab-text-muted);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.planner-callout {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 19px;
+  border: 1px solid color-mix(in srgb, var(--hisaab-highlight) 35%, var(--hisaab-border));
+  border-radius: var(--hisaab-radius-lg);
+  background: color-mix(in srgb, var(--hisaab-highlight) 12%, var(--hisaab-surface));
+  text-decoration: none;
+}
+
+.planner-callout .icon {
+  width: 26px;
+  height: 26px;
+  color: var(--hisaab-brand);
+}
+
+.planner-callout span:nth-child(2) {
+  display: grid;
+  gap: 4px;
+}
+
+.planner-callout small,
+.subtle-copy {
+  color: var(--hisaab-text-muted);
+  font-size: 11px;
+}
+
+.callout-arrow {
+  margin-left: auto;
+  color: var(--hisaab-brand);
+  font-size: 20px;
+}
+
+.empty-state {
+  min-height: 120px;
+  color: var(--hisaab-text-muted);
+  text-align: center;
+}
+
+.alert {
+  padding: 12px 14px;
+  border: 1px solid var(--hisaab-expense);
+  border-radius: var(--hisaab-radius-sm);
+  color: var(--hisaab-expense);
+  font-size: 12px;
+}
+
+@media (max-width: 64rem) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 40rem) {
+  .page-heading {
+    align-items: start;
+  }
+
+  .summary-grid {
+    gap: 10px;
+  }
+
+  .summary-card {
+    padding: 14px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .trend-chart {
+    height: 190px;
+  }
+
+  .trend-plot {
+    padding-left: 44px;
+  }
+
+  .trend-axis {
+    font-size: 9px;
+  }
+
+  .chart-legend {
+    gap: 7px;
+    font-size: 9px;
+  }
+}

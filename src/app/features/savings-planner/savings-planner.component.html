@@ -1,0 +1,93 @@
+<main class="feature-page planner-page">
+  <section class="page-heading">
+    <div>
+      <p class="eyebrow">A PLAN YOU CAN ADJUST</p>
+      <h1>Savings planner</h1>
+      <p class="subtitle">Estimate how long it could take to reach a target.</p>
+    </div>
+  </section>
+  <div class="planner-layout">
+    <section class="panel planner-form">
+      <p class="eyebrow">YOUR NUMBERS</p>
+      <h2>What are you saving for?</h2>
+      <label for="goal-target">Savings target</label>
+      <div class="amount-field">
+        <span aria-hidden="true">PKR</span
+        ><input
+          id="goal-target"
+          type="number"
+          min="0"
+          step="1000"
+          [value]="target()"
+          (input)="updateAmount('target', $event)"
+        />
+      </div>
+      <label for="goal-current">Already saved</label>
+      <div class="amount-field">
+        <span aria-hidden="true">PKR</span
+        ><input
+          id="goal-current"
+          type="number"
+          min="0"
+          step="1000"
+          [value]="current()"
+          (input)="updateAmount('current', $event)"
+        />
+      </div>
+      <label for="goal-monthly">Planned monthly contribution</label>
+      <div class="amount-field">
+        <span aria-hidden="true">PKR</span
+        ><input
+          id="goal-monthly"
+          type="number"
+          min="0"
+          step="500"
+          [value]="monthlyContribution()"
+          (input)="updateAmount('monthlyContribution', $event)"
+        />
+      </div>
+      @if (currentMonthNetSavings() !== null && currentMonthNetSavings()! > 0) {
+        <p class="savings-suggestion">
+          This month’s net savings are {{ currentMonthNetSavings() | currency: 'PKR' }}.
+          <button type="button" (click)="useCurrentMonthSavings()">Use this amount</button>
+        </p>
+      } @else if (currentMonthNetSavings() !== null && currentMonthNetSavings()! <= 0) {
+        <p class="savings-suggestion">
+          This month has no positive net savings to suggest. You can still enter a contribution
+          above.
+        </p>
+      }
+      @if (errorMessage()) {
+        <p class="planner-error" role="status">{{ errorMessage() }}</p>
+      }
+      <p class="planner-disclaimer">
+        This is a simple estimate. It assumes a consistent contribution and does not include
+        interest, fees, or changing income and expenses.
+      </p>
+    </section>
+    <section class="panel planner-result" aria-live="polite">
+      <span class="planner-icon icon icon-money" aria-hidden="true"></span>
+      @if (plan()?.monthsToGoal === 0) {
+        <p class="eyebrow">GOAL REACHED</p>
+        <h2>You’re already there.</h2>
+        <p>Your current savings meet or exceed this target.</p>
+      } @else if (plan(); as result) {
+        <p class="eyebrow">YOUR ESTIMATE</p>
+        <h2>{{ result.monthsToGoal }} {{ result.monthsToGoal === 1 ? 'month' : 'months' }}</h2>
+        <p>
+          At {{ monthlyContribution() | currency: 'PKR' }} per month, you could reach your target
+          around <strong>{{ completionDate | date: 'MMMM y' }}</strong
+          >.
+        </p>
+        <div class="planner-progress">
+          <span [style.width.%]="target() > 0 ? (current() / target()) * 100 : 0"></span>
+        </div>
+        <small>{{ current() | currency: 'PKR' }} saved of {{ target() | currency: 'PKR' }}</small>
+      } @else {
+        <p class="eyebrow">ADD A CONTRIBUTION</p>
+        <h2>A monthly amount makes a plan.</h2>
+        <p>Enter a contribution greater than zero to estimate the time needed.</p>
+      }
+    </section>
+  </div>
+</main>

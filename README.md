@@ -2,6 +2,23 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
 
+## Current functionality
+
+The guest experience supports an overview dashboard, income CRUD, expense CRUD,
+category management, a savings-planning calculator, and expense exports.
+Categories are stored in IndexedDB and are seeded with Food, Rent, Transport,
+Bills, and Other. Guest data remains in the current browser profile; API
+authentication, account synchronization, and persistent savings goals are not
+wired up yet. CSV export is Excel-compatible; Print / PDF uses the browser's
+print dialog.
+
+The Hisaab shell uses Tailwind CSS v4 with semantic CSS-variable tokens and a
+self-hosted DM Sans Variable font. Theme preference follows the operating system
+until the user selects light or dark mode; that override is stored in
+`localStorage` and applied before Angular starts.
+Icons supplied for the interface are served locally from
+`public/assets/icons/` and use CSS masks to adapt to the active theme.
+
 ## Development server
 
 To start a local development server, run:
